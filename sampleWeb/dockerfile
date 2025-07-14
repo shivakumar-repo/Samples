@@ -1,4 +1,4 @@
-FROM tomcat:latest
+FROM app-tomcat
 
 WORKDIR /usr/local/tomcat
 RUN rm -rf sampleWeb.war
