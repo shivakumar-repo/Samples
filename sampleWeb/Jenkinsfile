@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+
+    environment {
+        GitHome = 'https://github.com/shivakumar-repo/Samples.git';
+        BUILD_NAME = "my-project-${env.BUILD_NUMBER}"
+    }
+     tools {
+        maven 'Maven 3.8.8'  // Make sure this tool name matches your Jenkins Maven configuration
+    }
+
+    stages {
+        stage('Checkout Git Repository') {
+            steps {
+                git(
+                    url: "${GitHome}",
+                    branch: 'main'
+                )
+            }
+        }
+
+        stage('Build with Maven') {
+            steps {
+            /*bat 'cd Api-geteway-main/api-gateway mvn clean install'*/
+            dir('./sampleWeb'){
+                    bat 'mvn clean install';
+                }
+            dir('./sampleWeb/target'){
+                    bat 'echo hi ';
+                }
+            }
+        }
+        stage('Deployment') {
+            steps {
+                dir('./sampleWeb'){
+                   /*bat 'Docker build -t custom-tomcat .';
+                   bat 'docker run -d -p 8080:8080 --name api-tomcat custom-tomcat';   */
+                    bat 'docker cp target/sampleWeb.war app-tomcat:/usr/local/tomcat/webapps/'
+                    /*bat 'docker restart app-tomcat';*/
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Build completed successfully!'
+        }
+        failure {
+            echo 'Build failed.'
+        }
+    }
+}
