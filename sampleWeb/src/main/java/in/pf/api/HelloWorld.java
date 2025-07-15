@@ -30,6 +30,6 @@ public class HelloWorld extends HttpServlet {
       HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("<p>Hello World new !!!!</p>");
+        out.println("<p>Hello World !!!!</p>");
     }
 }
