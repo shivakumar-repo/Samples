@@ -30,6 +30,6 @@ public class HelloWorld extends HttpServlet {
       HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("<p>Hello World !!!!</p>");
+        out.println("<p>Call from scm trigger url</p>");
     }
 }
